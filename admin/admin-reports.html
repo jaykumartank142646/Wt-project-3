@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Reports</title>
+  <link rel="stylesheet" href="admin-style.css">
+  <style>
+    .main-content {
+      flex: 1;
+      background: white;
+      padding: 25px 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+      margin: 20px;
+    }
+    .reports-section {
+      background: #fff;
+      border-radius: 10px;
+      padding: 28px 34px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.09);
+      max-width: 900px;
+      margin-bottom: 30px;
+      margin: auto;
+      width: 100%;
+    }
+    .reports-section h2 {
+      color: black;
+      margin-bottom: 22px;
+      width: 100%;
+    }
+    .report-cards {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+    .report-card {
+      background: #f3f4f6;
+      border-radius: 8px;
+      padding: 18px 24px;
+      flex: 1 1 220px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      min-width: 220px;
+    }
+    .report-card h3 {
+      margin: 0 0 10px 0;
+      color: #333;
+    }
+    .report-card p {
+      margin: 0;
+      color: #1e40af;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .download-btn {
+      background: darkgray;
+      color: black;
+      padding: 8px 18px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .report-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 28px;
+    }
+    .report-table th, .report-table td {
+      padding: 10px 14px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    .report-table th {
+      background: #f3f4f6;
+      color: #333;
+    }
+    .report-table tr:nth-child(even) {
+      background: #f9fafb;
+    }
+    @media (max-width: 900px) {
+      .reports-section, .main-content {
+        max-width: 100%;
+        padding: 18px 8px;
+      }
+      .report-cards {
+        flex-direction: column;
+        gap: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <nav>
+        <div class="logo">TimeZone</div>
+      </nav>
+    </header>
+    <div class="dashboard">
+      <aside class="sidebar">
+        <h2>Admin Panel</h2>
+        <ul>
+          <li><a href="admin-dashboard.html">Dashboard</a></li>
+          <li><a href="admin-orders.html">Orders</a></li>
+          <li><a href="admin-products.html">Products</a></li>
+          <li><a href="admin-users.html">Customers</a></li>
+          <li><a href="admin-reports.html" class="active">Reports</a></li>
+          <li><a href="admin-profile.html">Admin profile</a></li>
+        </ul>
+      </aside>
+      <main class="main-content">
+        <section class="reports-section">
+          <h2>Store Reports & Analytics</h2>
+          <!-- Report Cards -->
+          <div class="report-cards">
+            <div class="report-card">
+              <h3>Sales Report</h3>
+              <p>$89,432</p>
+              <button class="download-btn">Download PDF</button>
+            </div>
+            <div class="report-card">
+              <h3>Orders Report</h3>
+              <p>1,248 Orders</p>
+              <button class="download-btn">Download CSV</button>
+            </div>
+            <div class="report-card">
+              <h3>Customers Report</h3>
+              <p>3,487 Customers</p>
+              <button class="download-btn">Download Excel</button>
+            </div>
+            <div class="report-card">
+              <h3>Product Inventory</h3>
+              <p>100 Products</p>
+              <button class="download-btn">Download PDF</button>
+            </div>
+          </div>
+
+          <!-- Recent Reports Table -->
+          <h3 style="margin-top:24px; color:#333;">Recent Generated Reports</h3>
+          <table class="report-table">
+            <thead>
+              <tr>
+                <th>Report Name</th>
+                <th>Date Generated</th>
+                <th>Type</th>
+                <th>Download</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Monthly Sales - Sep 2025</td>
+                <td>Sep 24, 2025</td>
+                <td>PDF</td>
+                <td><button class="download-btn">Download</button></td>
+              </tr>
+              <tr>
+                <td>Customer List</td>
+                <td>Sep 23, 2025</td>
+                <td>Excel</td>
+                <td><button class="download-btn">Download</button></td>
+              </tr>
+              <tr>
+                <td>Order Summary - Q3</td>
+                <td>Sep 20, 2025</td>
+                <td>CSV</td>
+                <td><button class="download-btn">Download</button></td>
+              </tr>
+              <tr>
+                <td>Inventory Snapshot</td>
+                <td>Sep 18, 2025</td>
+                <td>PDF</td>
+                <td><button class="download-btn">Download</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+    <footer>
+      <p>© 2024 TimeZone Watch Store. All rights reserved.</p>
+    </footer>
+  </div>
+</body>
+</html>
+
+
+
+
+
+
+ 

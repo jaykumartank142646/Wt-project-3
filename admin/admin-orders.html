@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Order List</title>
+  <link rel="stylesheet" href="admin-style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    .container,
+    .container-fluid {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+
+    .row {
+      margin-right: 0 !important;
+      margin-left: 0 !important;
+      padding-right: 0 !important;
+      padding-left: 0 !important;
+      width: 100% !important;
+    }
+
+    body,
+    .container,
+    .row {
+      margin: 0 !important;
+      padding: 0 !important;
+      margin-left: 0% !important;
+    }
+
+    .order-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      padding: 20px;
+    }
+
+    .nav-tabs .nav-link.active {
+      font-weight: bold;
+      border-bottom: 2px solid #333;
+      cursor: pointer;
+    }
+
+    .nav-tabs .nav-link.disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .table tbody tr {
+      vertical-align: middle;
+    }
+
+    .status-badge {
+      font-size: 0.85rem;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .status-pending {
+      background: #ffe5e5;
+      color: #dc3545;
+    }
+
+    .status-dispatch {
+      background: #e0f7e9;
+      color: #28a745;
+    }
+
+    .status-completed {
+      background: #e3e7ff;
+      color: #333;
+    }
+
+    .highlight-row {
+      background: #333;
+      color: #fff;
+    }
+
+    .highlight-row td {
+      color: #fff;
+    }
+
+    .highlight-row .status-dispatch {
+      background: #fff;
+      color: #333;
+      font-weight: bold;
+    }
+
+    .table thead th {
+      font-weight: 600;
+      color: #666;
+    }
+  </style>
+</head>
+
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  <div class="container">
+    <header>
+      <nav>
+        <div class="logo">TimeZone</div>
+      </nav>
+    </header>
+
+    <div class="dashboard">
+      <aside class="sidebar">
+        <h2>Admin Panel</h2>
+        <ul>
+          <li><a href="admin-dashboard.html">Dashboard</a></li>
+          <li><a href="admin-orders.html" class="active">Orders</a></li>
+          <li><a href="admin-products.html">Products</a></li>
+          <li><a href="admin-users.html">Customers</a></li>
+          <li><a href="admin-reports.html">Reports</a></li>
+          <li><a href="admin-profile.html">Admin profile</a></li>
+        </ul>
+      </aside>
+
+      <div class="container ">
+        <div class="order-card">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4>Order</h4>
+            <small class="text-muted" id="order-count">28 orders found</small>
+          </div>
+
+          <!-- Tabs -->
+          <ul class="nav nav-tabs mb-3" id="status-tabs">
+            <li class="nav-item">
+              <a class="nav-link active" href="#" data-status="all">All orders</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-status="dispatch">Dispatch</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-status="pending">Pending</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-status="completed">Completed</a>
+            </li>
+          </ul>
+
+          <!-- Filters -->
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <input type="date" class="form-control d-inline-block" style="width:auto;" id="start-date" value="2020-07-31">
+              <span class="mx-2">to</span>
+              <input type="date" class="form-control d-inline-block" style="width:auto;" id="end-date" value="2020-08-03">
+              <button class="btn btn-secondary ms-2" id="filter-date-btn">Filter</button>
+              <button class="btn btn-light ms-2" id="clear-date-btn">Clear</button>
+            </div>
+            <div>
+              <button class="btn btn-light"><i class="bi bi-bell"></i></button>
+              <button class="btn btn-light"><i class="bi bi-search"></i></button>
+              <button class="btn btn-primary" style="background-color: #333;">Add New Order</button>
+            </div>
+          </div>
+
+          <!-- Orders Table -->
+          <div class="table-responsive">
+            <table class="table align-middle" id="orders-table">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Address</th>
+                  <th>Date</th>
+                  <th>Price</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-status="pending" data-date="2020-07-31">
+                  <td>#2632</td>
+                  <td> Brooklyn Zoe</td>
+                  <td>302 Snider Street, RUTLAND, VT</td>
+                  <td>31 Jul 2020</td>
+                  <td>$64.00</td>
+                  <td><span class="status-badge status-pending">Pending</span></td>
+                  <td><button class="btn btn-sm btn-light action-btn">⚙️</button></td>
+                </tr>
+
+                <tr data-status="completed" data-date="2020-08-02">
+                  <td>#2634</td>
+                  <td> Sandra Pugh</td>
+                  <td>1640 Thorn Street, SALE CITY, GA</td>
+                  <td>02 Aug 2020</td>
+                  <td>$74.00</td>
+                  <td><span class="status-badge status-completed">Completed</span></td>
+                  <td><button class="btn btn-sm btn-light action-btn">⚙️</button></td>
+                </tr>
+                <tr data-status="pending" data-date="2020-08-02">
+                  <td>#2635</td>
+                  <td> Vernie Hart</td>
+                  <td>3898 Oak Drive, DOVER, DE</td>
+                  <td>02 Aug 2020</td>
+                  <td>$82.00</td>
+                  <td><span class="status-badge status-pending">Pending</span></td>
+                  <td><button class="btn btn-sm btn-light action-btn">⚙️</button></td>
+                </tr>
+                <tr data-status="dispatch" data-date="2020-08-03">
+                  <td>#2636</td>
+                  <td> Mark Clark</td>
+                  <td>1915 Augusta Park, NASSAU, NY</td>
+                  <td>03 Aug 2020</td>
+                  <td>$39.00</td>
+                  <td><span class="status-badge status-dispatch">Dispatch</span></td>
+                  <td><button class="btn btn-sm btn-light action-btn">⚙️</button></td>
+                </tr>
+                <tr data-status="pending" data-date="2020-08-03">
+                  <td>#2637</td>
+                  <td> Rebekah Foster</td>
+                  <td>3445 Park Boulevard, BIOLA, CA</td>
+                  <td>03 Aug 2020</td>
+                  <td>$67.00</td>
+                  <td><span class="status-badge status-pending">Pending</span></td>
+                  <td><button class="btn btn-sm btn-light action-btn">⚙️</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination -->
+          <div class="d-flex justify-content-between align-items-center">
+            <small>Showing 06-12 of 28</small>
+            <nav>
+              <ul class="pagination pagination-sm mb-0">
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">5</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <p>© 2024 TimeZone Watch Store. All rights reserved.</p>
+    </footer>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const tabs = document.querySelectorAll('#status-tabs .nav-link');
+        const rows = document.querySelectorAll('#orders-table tbody tr');
+        const orderCount = document.getElementById('order-count');
+        const startDateInput = document.getElementById('start-date');
+        const endDateInput = document.getElementById('end-date');
+        const filterDateBtn = document.getElementById('filter-date-btn');
+        const clearDateBtn = document.getElementById('clear-date-btn');
+
+        let currentStatusFilter = 'all';
+        let currentStartDate = null;
+        let currentEndDate = null;
+
+        // Helper to parse date string in format YYYY-MM-DD
+        function parseDate(dateStr) {
+          return new Date(dateStr + 'T00:00:00');
+        }
+
+        // Format date from table (e.g. "31 Jul 2020") to YYYY-MM-DD
+        function formatTableDate(dateStr) {
+          const months = {
+            Jan: '01',
+            Feb: '02',
+            Mar: '03',
+            Apr: '04',
+            May: '05',
+            Jun: '06',
+            Jul: '07',
+            Aug: '08',
+            Sep: '09',
+            Oct: '10',
+            Nov: '11',
+            Dec: '12'
+          };
+          const parts = dateStr.trim().split(' ');
+          if (parts.length !== 3) return null;
+          const day = parts[0].padStart(2, '0');
+          const month = months[parts[1]];
+          const year = parts[2];
+          return `${year}-${month}-${day}`;
+        }
+
+        // Filter rows based on current filters
+        function filterRows() {
+          let visibleCount = 0;
+          rows.forEach(row => {
+            const status = row.getAttribute('data-status');
+            const dateStr = row.getAttribute('data-date');
+            let show = true;
+
+            // Filter by status
+            if (currentStatusFilter !== 'all' && status !== currentStatusFilter) {
+              show = false;
+            }
+
+            // Filter by date range
+            if (show && currentStartDate && currentEndDate) {
+              const rowDate = parseDate(dateStr);
+              if (rowDate < currentStartDate || rowDate > currentEndDate) {
+                show = false;
+              }
+            }
+
+            if (show) {
+              row.style.display = '';
+              visibleCount++;
+            } else {
+              row.style.display = 'none';
+            }
+          });
+
+          orderCount.textContent = `${visibleCount} orders found`;
+        }
+
+        // Tab click handler
+        tabs.forEach(tab => {
+          tab.addEventListener('click', e => {
+            e.preventDefault();
+            if (tab.classList.contains('disabled')) return;
+
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            currentStatusFilter = tab.getAttribute('data-status');
+            filterRows();
+          });
+        });
+
+        // Date filter button
+        filterDateBtn.addEventListener('click', () => {
+          const startVal = startDateInput.value;
+          const endVal = endDateInput.value;
+
+          if (!startVal || !endVal) {
+            alert('Please select both start and end dates.');
+            return;
+          }
+
+          const start = parseDate(startVal);
+          const end = parseDate(endVal);
+
+          if (start > end) {
+            alert('Start date cannot be after end date.');
+            return;
+          }
+
+          currentStartDate = start;
+          currentEndDate = end;
+          filterRows();
+        });
+
+        // Clear date filter button
+        clearDateBtn.addEventListener('click', () => {
+          startDateInput.value = '';
+          endDateInput.value = '';
+          currentStartDate = null;
+          currentEndDate = null;
+          filterRows();
+        });
+
+        // Action button click (gear icon)
+        const actionButtons = document.querySelectorAll('.action-btn');
+        actionButtons.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const row = btn.closest('tr');
+            const orderId = row.querySelector('td').textContent.trim();
+            alert(`You clicked settings for order ${orderId}`);
+            // Here you can add your edit or details modal logic
+          });
+        });
+
+        // Initial filter to show all
+        filterRows();
+      });
+    </script>
+</body>
+
+</html>

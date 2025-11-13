@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TimeZone - Watch Store</title>
+    <link rel="stylesheet" href="user-style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+       
+
+        /* Hero Section */
+        .hero {
+            background-color: gray;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero-content p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .cta-btn {
+            background: #e74c3c;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        /* Products Section */
+        .products-section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 50px;
+            color: #333;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            background: #f8f8f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #666;
+        }
+
+        .product-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .product-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .product-price {
+            font-size: 24px;
+            color: #e74c3c;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .buy-btn {
+            background: #3498db;
+            color: white;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .buy-btn:hover {
+            background: #2980b9;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">TimeZone</div>
+            <ul class="nav-links">
+                <li><a href="user-homepage.html">Home</a></li>
+                <li><a href="user-products.html">Products</a></li>
+                <li><a href="user-cart.html">Cart</a></li>
+                <li><a href="user-profile.html">Profile</a></li>
+                <li><a href="user-login.html">Login</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Premium Watches</h1>
+            <p>Discover our exclusive collection of luxury timepieces</p>
+            <a href="#products" class="cta-btn">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section" id="products">
+        <h2 class="section-title">Featured Products</h2>
+        <div class="products-grid">
+            
+            <!-- Product 1 -->
+            <div class="product-card">
+                
+                <img class="product-image"
+                 src="https://tse2.mm.bing.net/th/id/OIP.8HLbhqNmpZ-P6NM_9mNkpQHaHa?pid=Api&P=0&h=180">
+                <div class="product-info">
+                    <div class="product-name">Classic Elegance</div>
+                    <div class="product-price">$299</div>
+                    <button class="buy-btn">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card">
+               <img class="product-image"
+                src="https://tse4.mm.bing.net/th/id/OIP.hdLZFpzbgmHGpjWeVrtUzgHaHa?pid=Api&P=0&h=180">
+                <div class="product-info">
+                    <div class="product-name">Sport Pro</div>
+                    <div class="product-price">$199</div>
+                    <button class="buy-btn">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card">
+               <img class="product-image"
+                src="https://tse2.mm.bing.net/th/id/OIP.q32ChsL7D-HtZ_Kj-KcnOQHaEN?pid=Api&P=0&h=180">
+                <div class="product-info">
+                    <div class="product-name">Luxury Gold</div>
+                    <div class="product-price">$899</div>
+                    <button class="buy-btn">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-card">
+                <img class="product-image"
+                 src="https://tse3.mm.bing.net/th/id/OIP.g3pyQvCEdkrKJRw8nkrOnAHaHa?pid=Api&P=0&h=180">
+                <div class="product-info">
+                    <div class="product-name">Smart Tech</div>
+                    <div class="product-price">$399</div>
+                    <button class="buy-btn" >Buy Now</button>
+                </div>
+            </div>
+
+            
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 TimeZone Watch Store. All rights reserved.</p>
+    </footer>
+    <script>
+        // Select all buy buttons
+        const buyButtons = document.querySelectorAll('.buy-btn');
+        buyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Find the product card container
+                const productCard = button.closest('.product-card');
+                // Get product name and price
+                const productName = productCard.querySelector('.product-name').textContent;
+                const productPrice = productCard.querySelector('.product-price').textContent;
+                // Show alert
+                alert(`Thank you for purchasing the ${productName} for ${productPrice}!`);
+            });
+        });
+    </script>
+</body>
+</html>

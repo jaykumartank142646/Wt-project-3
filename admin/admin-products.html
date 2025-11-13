@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Product Management</title>
+  <link rel="stylesheet" href="admin-style.css">
+  <style>
+    .summary-bar {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+      margin-bottom: 22px;
+      background: #f3f4f6;
+      border-radius: 12px;
+      padding: 16px 28px;
+      box-shadow: 0 2px 8px rgba(30,41,59,0.09);
+      font-size: 1.08em;
+      font-weight: bold;
+      color: #444;
+    }
+    .summary-bar span {
+      background: #e5e7eb;
+      padding: 7px 17px;
+      border-radius: 18px;
+      margin-right: 8px;
+      color: #333;
+      font-weight: normal;
+    }
+    .search-filter-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+    .search-bar {
+      flex: 1;
+      padding: 10px;
+      border-radius: 7px;
+      border: 1px solid #d1d5db;
+      font-size: 16px;
+    }
+    .category-filter {
+      padding: 10px;
+      border-radius: 7px;
+      border: 1px solid #d1d5db;
+      font-size: 16px;
+      background: #f8fafc;
+      color: #333;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(250px, 1fr));
+      gap: 10px;
+    }
+    .product {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      position: relative;
+      transition: box-shadow 0.2s, transform 0.2s;
+      overflow: hidden;
+    }
+    .product:hover {
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transform: translateY(-5px);
+    }
+    .product img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-bottom: 15px;
+    }
+    .product h3 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .product p {
+      color: #666;
+      margin-bottom: 15px;
+    }
+    .id-price-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 18px;
+      margin: 18px 0 10px 0;
+    }
+    .product-id {
+      font-size: 20px;
+      font-weight: bold;
+      color: #222;
+    }
+    .price {
+      font-size: 20px;
+      font-weight: bold;
+      color: #e74c3c;
+      margin: 0;
+    }
+    .add-product-btn {
+      display: block;
+      margin: 0 0 24px 0;
+      padding: 12px 32px;
+      background: gray;
+      color: black;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(30,41,59,0.08);
+      transition: background 0.2s;
+    }
+    .add-product-btn:hover {
+      background: darkgray;
+    }
+    .best-badge {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: #eab308;
+      color: #fff;
+      padding: 7px 19px;
+      font-weight: bold;
+      font-size: 1em;
+      border-radius: 24px;
+      box-shadow: 0 2px 6px rgba(30,41,59,0.13);
+      z-index: 2;
+      letter-spacing: 1px;
+    }
+    .low-stock-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: #e74c3c;
+      color: #fff;
+      padding: 7px 13px;
+      font-size: 0.95em;
+      border-radius: 20px;
+      font-weight: bold;
+      z-index: 2;
+      letter-spacing: 1px;
+    }
+    .quick-actions {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .product:hover .quick-actions {
+      opacity: 1;
+    }
+    .quick-action-btn {
+      background: #e5e7eb;
+      color: #333;
+      border: none;
+      border-radius: 6px;
+      padding: 7px 16px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 1px 4px rgba(30,41,59,0.07);
+      transition: background 0.2s;
+    }
+    .quick-action-btn:hover {
+      background: #888;
+      color: #fff;
+    }
+    @media (max-width: 900px) {
+      .products {
+        grid-template-columns: repeat(2, minmax(180px, 1fr));
+      }
+      .add-product-btn {
+        width: 100%;
+        font-size: 16px;
+        padding: 10px 0;
+      }
+      .summary-bar,
+      .search-filter-row {
+        flex-direction: column;
+        gap: 8px;
+        padding: 10px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <nav>
+        <div class="logo">TimeZone</div>
+      </nav>
+    </header>
+    <div class="dashboard">
+      <aside class="sidebar">
+        <h2>Admin Panel</h2>
+        <ul>
+          <li><a href="admin-dashboard.html">Dashboard</a></li>
+          <li><a href="admin-orders.html">Orders</a></li>
+          <li><a href="admin-products.html" class="active">Products</a></li>
+          <li><a href="admin-users.html">Customers</a></li>
+          <li><a href="admin-reports.html">Reports</a></li>
+          <li><a href="admin-profile.html">Admin profile</a></li>
+        </ul>
+      </aside>
+      <div class="container">
+        <!-- Summary Bar -->
+        <div class="summary-bar">
+          <div>Total Products: <span>40</span></div>
+          <div>Categories: <span>Premium, Men, Women, Child, Sale</span></div>
+          <div>Best Sellers: <span>1</span></div>
+          <div>Low Stock: <span>5</span></div>
+        </div>
+        <!-- Search and Filter -->
+        <div class="search-filter-row">
+          <input type="text" class="search-bar" placeholder="Search products...">
+          <select class="category-filter">
+            <option value="">All Categories</option>
+            <option value="Premium">Premium</option>
+            <option value="Men">Men</option>
+            <option value="Women">Women</option>
+            <option value="Child">Child</option>
+            <option value="Sale">Sale</option>
+          </select>
+        </div>
+        <!-- Add Product Button -->
+        <button class="add-product-btn" onclick="location.href='add-product.html'">+ Add Product</button>
+        <!-- Highlight "Best" product at top -->
+        <div style="margin-bottom:32px; padding:16px 22px; background:#f3f4f6; border-radius:12px; box-shadow:0 2px 8px rgba(30,41,59,0.09); display:flex; align-items:center; gap:22px;">
+          <img src="product img/Premium/16.jpeg" style="height:80px;width:80px;object-fit:cover;border-radius:8px;box-shadow:0 2px 8px rgba(30,41,59,0.11);">
+          <div>
+            <span style="background:#eab308;color:#fff;padding:5px 13px;border-radius:16px;font-weight:bold;margin-right:12px;">Best Seller</span>
+            <span style="font-size:1.2em;font-weight:bold;color:#333;">OLEVS Red Dial Women's Watch</span>
+            <span style="font-size:1.1em;margin-left:18px;color:#e74c3c;">$499.99</span>
+          </div>
+        </div>
+        <div class="products">
+            <div class="product">
+            <img src="product img/Premium/16.jpeg">
+            <h3>OLEVS Red Dial Women's Watch</h3>
+            <h2>ID : PM1</h2>
+            <div class="price">$499.99</div>
+            <br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+            
+          </div>
+
+          <!-- Product 2 -->
+          <div class="product">
+            <img src="product img/Premium/5.jpeg">
+            <h3>Men’s Chronograph Sports Watch</h3>
+            <h2>ID : PM2</h2>
+            <div class="price">$299.99</div>
+             <br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 3 -->
+          <div class="product">
+            <img src="product img/Premium/11.jpeg">
+            <h3>Floral Crystal Dial Mesh Watch</h3>
+            <h2>ID : PM3</h2>
+            <div class="price">$599.99</div>
+             <br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 4 -->
+          <div class="product">
+            <img src="product img/Premium/1.jpeg">
+            <h3>Luxury Leather Strap Chronograph Watch</h3>
+            <h2>ID : PM4</h2>
+            <div class="price">$299.99</div>
+             <br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 5 -->
+          <div class="product">
+            <img src="product img/Premium/12.jpeg">
+            <h3>Elegant Crystal Bracelet Watch</h3>
+            <h2>ID : PM5</h2>
+            <div class="price">$699.99</div>
+             <br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 6 -->
+          <div class="product">
+            <img src="product img/Premium/4.jpeg">
+            <h3>Minimalist Black Chronograph Watch</h3>
+            <h2>ID : PM6</h2>
+            <div class="price">$500.99</div>
+             <br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 7 -->
+          <div class="product">
+            <img src="product img/Premium/15.jpeg">
+            <h3>Two-Tone Rolex Datejust Style Watch</h3>
+            <h2>ID : PM7</h2>
+            <div class="price">$499.99</div>
+             <br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 8 -->
+          <div class="product">
+            <img src="product img/Premium/3.jpeg">
+            <h3>Rolex GMT-Master II Style Watch</h3>
+            <h2>ID : PM8</h2>
+            <div class="price">$999.99</div>
+             <br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 9 -->
+          <div class="product">
+            <img src="product img/men/11.jpeg">
+            <h3>Classic Roman Numeral Dress Watch</h3>
+            <h2>ID : PM9</h2>
+            <div class="price">$299.99</div>
+            <br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 10 -->
+          <div class="product">
+            <img src="product img/men/2.jpeg">
+            <h3>Modern Fitness Smartwatch</h3>
+            <h2>ID : PM10</h2>
+            <div class="price">$149.99</div>
+            <br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 11 -->
+          <div class="product">
+            <img src="product img/men/3.jpeg">
+            <h3>Matte Black Chronograph</h3>
+            <h2>ID : PM11</h2>
+            <div class="price">$399.99</div>
+             <br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 12 -->
+          <div class="product">
+            <img src="product img/men/4.jpeg">
+            <h3>Tactical Analog Watch</h3>
+            <h2>ID : PM12</h2>
+            <div class="price">$299.99</div>
+             <br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 13 -->
+          <div class="product">
+            <img src="product img/men/5.jpeg">
+            <h3>Skeleton Dial Sport Watch</h3>
+            <h2>ID : PM13</h2>
+            <div class="price">$159.99</div>
+             <br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 14 -->
+          <div class="product">
+            <img src="product img/men/6.jpeg">
+            <h3>Rose Gold Roman Chronograph</h3>
+            <h2>ID : PM14</h2>
+            <div class="price">$279.99</div> <br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 15 -->
+          <div class="product">
+            <img src="product img/men/9.jpeg">
+            <h3>Minimalist Blue Accents Watch</h3>
+            <h2>ID : PM15</h2>
+            <div class="price">$399.99</div> <br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 16 -->
+          <div class="product">
+            <img src="product img/men/13.jpeg">
+            <h3>Multi-Time Zone Dual Dial Watch</h3>
+            <h2>ID : PM16</h2>
+            <div class="price">$289.99</div> <br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 17 -->
+          <div class="product">
+            <img src="product img/women/1.jpeg">
+            <h3>Elegant Rose Gold Watch</h3>
+            <h2>ID : PM17</h2>
+            <div class="price">$289.99</div> <br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 18 -->
+          <div class="product">
+            <img src="product img/women/2.jpeg">
+            <h3>Vintage Red Oval Watch</h3>
+            <h2>ID : PM18</h2>
+            <div class="price">$149.99</div> <br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 19 -->
+          <div class="product">
+            <img src="product img/women/3.jpeg">
+            <h3>Gold Bracelet Watch Set</h3>
+            <h2>ID : PM19</h2>
+            <div class="price">$249.99</div> <br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 20 -->
+          <div class="product">
+            <img src="product img/women/4.jpeg">
+            <h3>Matte Green Metal Watch</h3>
+            <h2>ID : PM20</h2>
+            <div class="price">$299.99</div> <br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 21 -->
+          <div class="product">
+            <img src="product img/women/5.jpeg">
+            <h3>Smart Butterfly Display Watch</h3>
+            <h2>ID : PM21</h2>
+            <div class="price">$300.00</div> <br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 22 -->
+          <div class="product">
+            <img src="product img/women/6.jpeg">
+            <h3>Silver & Gold Dress Watch</h3>
+            <h2>ID : PM22</h2>
+            <div class="price">$333.33</div> <br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 23 -->
+          <div class="product">
+            <img src="product img/women/7.jpeg">
+            <h3>Rectangular Metal Link Watches</h3>
+            <h2>ID : PM23</h2>
+            <div class="price">$279.99</div><br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 24 -->
+          <div class="product">
+            <img src="product img/women/8.jpeg">
+            <h3>Red Glam Chronograph Watch</h3>
+            <h2>ID : PM24</h2>
+            <div class="price">$999.99</div><br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 25 -->
+          <div class="product">
+            <img src="product img/child/1.jpeg">
+            <h3>Omega Speedmaster 38 Co-Axial Chronograph</h3>
+            <h2>ID : PM25</h2>
+            <div class="price">$199.99</div><br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 26 -->
+          <div class="product">
+            <img src="product img/child/2.jpeg">
+            <h3>Sanda Tactical Digital Watch</h3>
+            <h2>ID : PM26</h2>
+            <div class="price">$149.99</div><br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 27 -->
+          <div class="product">
+            <img src="product img/child/3.jpeg">
+            <h3>Cosmos Digital Sports Watch</h3>
+            <h2>ID : PM27</h2>
+            <div class="price">$119.99</div><br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 28 -->
+          <div class="product">
+            <img src="product img/child/4.jpeg">
+            <h3>Cute Cartoon Girls Watch</h3>
+            <h2>ID : PM28</h2>
+            <div class="price">$111.99</div><br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 29 -->
+          <div class="product">
+            <img src="product img/child/5.jpeg">
+            <h3>Kids Smart Watch with GPS and Camera</h3>
+            <h2>ID : PM29</h2>
+            <div class="price">$159.99</div><br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 30 -->
+          <div class="product">
+            <img src="product img/child/6.jpeg">
+            <h3>Simei Colorful Learning Watch</h3>
+            <h2>ID : PM30</h2>
+            <div class="price">$79.99</div><br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 31 -->
+          <div class="product">
+            <img src="product img/child/7.jpeg">
+            <h3>Coolboss Digital LED Sports Watch</h3>
+            <h2>ID : PM31</h2>
+            <div class="price">$99.99</div><br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 32 -->
+          <div class="product">
+            <img src="product img/child/8.jpeg">
+            <h3>Vintage Gold Digital Watch</h3>
+            <h2>ID : PM32</h2>
+            <div class="price">$159.99</div><br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 33 -->
+          <div class="product">
+            <img src="product img/sale/1.jpeg">
+            <h3>Rolex Milgauss 116400GV "Z-Blue"</h3>
+            <h2>ID : PM33</h2>
+            <div class="price">$89.99</div><br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 34 -->
+          <div class="product">
+            <img src="product img/sale/2.jpeg">
+            <h3>Omega Speedmaster Racing</h3>
+            <h2>ID : PM34</h2>
+            <div class="price">$149.99</div><br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 35 -->
+          <div class="product">
+            <img src="product img/sale/3.jpeg">
+            <h3>Rolex Oyster Perpetual “Celebration” Dial</h3>
+            <h2>ID : PM35</h2>
+            <div class="price">$99.99</div><br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 36 -->
+          <div class="product">
+            <img src="product img/sale/4.jpeg">
+            <h3>Patek Philippe Nautilus 5711</h3>
+            <h2>ID : PM36</h2>
+            <div class="price">$199.99</div><br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 37 -->
+          <div class="product">
+            <img src="product img/sale/5.jpeg">
+            <h3>Patek Philippe Calatrava</h3>
+            <h2>ID : PM37</h2>
+            <div class="price">$79.99</div><br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 38 -->
+          <div class="product">
+            <img src="product img/sale/6.jpeg">
+            <h3>Rolex Oyster Perpetual (Various Dials)</h3>
+            <h2>ID : PM38</h2>
+            <div class="price">$179.99</div><br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 39 -->
+          <div class="product">
+            <img src="product img/sale/7.jpeg">
+            <h3> Vintage Style Watch</h3>
+            <h2>ID : PM39</h2>
+            <div class="price">$169.99</div><br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+
+          <!-- Product 40 -->
+          <div class="product">
+            <img src="product img/sale/8.jpeg">
+            <h3>Minimalist Field Watch</h3>
+            <h2>ID : PM40</h2>
+            <div class="price">$189.99</div><br><br>
+            <div class="quick-actions">
+              <button class="quick-action-btn">Edit</button>
+              <button class="quick-action-btn">Delete</button>
+            </div>
+          </div>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <p>© 2024 TimeZone Watch Store. All rights reserved.</p>
+  </footer>
+</body>
+</html>

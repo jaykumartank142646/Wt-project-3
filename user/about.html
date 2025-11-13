@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Watch Store</title>
+    <link rel="stylesheet" href="user-style.css">
+    <style>
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            background: #f7f7f7;
+            color: #222;
+            line-height: 1.6;
+            
+        }
+      
+       
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            padding: 2rem;
+            animation: fadeInUp 1s;
+        }
+        h1, h2 {
+            color: #222;
+        }
+        .team {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .member {
+            background: #f0f0f0;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            animation: fadeIn 1.2s;
+        }
+        .member:hover {
+            transform: translateY(-8px) scale(1.05);
+        }
+        .member img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 0.5rem;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        footer {
+            text-align: center;
+            padding: 1.5rem 0;
+            background: #222;
+            color: #fff;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">TimeZone</div>
+            <ul class="nav-links">
+                <li><a href="user-homepage.html">Home</a></li>
+                <li><a href="user-products.html">Products</a></li>
+                <li><a href="user-cart.html">Cart</a></li>
+                <li><a href="user-profile.html">Profile</a></li>
+                <li><a href="user-login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div class="container">
+        <h2>Welcome to Watch Store</h2>
+        <p>We are passionate about bringing you the finest selection of watches for every style and occasion. Our team is dedicated to quality, service, and customer satisfaction.</p>
+        <h2>Meet Our Team</h2>
+        <div class="team">
+            <div class="member">
+                <img src="product img/men/2.jpeg" alt="Team Member">
+                <h3>Jayraj</h3>
+                <p>Founder & CEO</p>
+            </div>
+            <div class="member">
+                <img src="product img/women/3.jpeg" alt="Team Member">
+                <h3>Avani</h3>
+                <p>Lead Designer</p>
+            </div>
+            <div class="member">
+                <img src="product img/men/4.jpeg" alt="Team Member">
+                <h3>Yashvi </h3>
+                <p>Marketing Head</p>
+            </div>
+        </div>
+    </div>
+    <footer>
+        &copy; 2025 Watch Store. All rights reserved.
+    </footer>
+</body>
+</html>

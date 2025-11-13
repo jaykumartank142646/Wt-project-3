@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Watch Store - User Registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f5f6fa;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            width: 100%;
+            background: #222;
+            color: #fff;
+            padding: 1.5rem 0;
+            text-align: center;
+            font-size: 2rem;
+            letter-spacing: 2px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+        .registration-container {
+            background: #fff;
+            margin: 2rem 0;
+            padding: 2rem 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            max-width: 400px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .registration-container h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            color: #222;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+        label {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 0.3rem;
+            font-weight: 500;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border: 1px solid #d1d9e6;
+            border-radius: 6px;
+            font-size: 1rem;
+            background: #f9fafc;
+            transition: border 0.2s;
+        }
+        input:focus {
+            border-color: #222;
+            outline: none;
+        }
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+            margin-top: 1rem;
+        }
+        .register-btn {
+            background: #222;
+            color: #fff;
+            padding: 0.8rem 0;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: background 0.2s;
+            width: 100%;
+        }
+        .register-btn:hover,
+        .register-btn:focus {
+            background: #444;
+        }
+        .login-link {
+            text-align: center;
+            font-size: 0.98rem;
+            color: #222;
+            text-decoration: underline;
+            margin-top: 0.5rem;
+        }
+        @media (max-width: 500px) {
+            .registration-container {
+                padding: 1.2rem 0.7rem;
+                max-width: 95vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Watch Store Registration
+    </header>
+
+    <main>
+        <section class="registration-container">
+            <h2>Create Your Account</h2>
+            <form id="registrationForm" autocomplete="off">
+                <div>
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required autocomplete="name">
+                </div>
+                <div>
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required autocomplete="email">
+                </div>
+                <div>
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required autocomplete="username">
+                </div>
+                <div>
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required autocomplete="new-password">
+                </div>
+                <div>
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm-password" required autocomplete="new-password">
+                </div>
+
+                <div class="actions">
+                    <button type="submit" class="register-btn">Register</button>
+                    <a href="user-login.html" class="login-link">Already have an account? Login</a>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <!-- ✅ JavaScript file added -->
+    <script src="registration.js"></script>
+</body>
+</html>

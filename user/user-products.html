@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch Store</title>
+    <link rel="stylesheet" href="user-style.css">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+
+        }
+
+        /* type */
+        .cta-btn {
+            background: dimgray;
+            color: white;
+            padding: 10px 60px;
+            text-decoration: none;
+            border-radius: 15px;
+            font-size: 20px;
+            margin: 25px;
+        }
+
+        .type {
+
+            text-align: center;
+            background: linear-gradient(90deg, #f8fafc 0%, #eaf6fb 100%);
+            color: #3498db;
+            padding: 1.2rem 0 1.2rem 0;
+            height: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 18px;
+            box-shadow: 0 2px 12px rgba(52, 152, 219, 0.08);
+            letter-spacing: 2px;
+            margin-bottom: 32px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            font-size: 2.1rem;
+            font-weight: bold;
+            text-shadow: 0 2px 8px #b3e0fc55;
+            border: 1.5px solid #b3e0fc55;
+            transition: box-shadow 0.3s, transform 0.3s, background 0.3s;
+            cursor: pointer;
+        }
+
+          .cta-btn:hover {
+            box-shadow: 0 6px 32px #b3e0fc55, 0 2px 8px #3498db22;
+            background: linear-gradient(90deg, darkgrey 0%,#eaf6fb 100%);
+            transform: scale(1.025);
+            color: black;
+        }
+
+
+        /* Header */
+        header {
+            background: #333;
+            color: white;
+            padding: 1rem 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .container {
+            padding: 0 20px;
+            margin-bottom: 50px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(270px, 1fr));
+            gap: 32px 24px;
+            padding: 32px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            justify-items: center;
+        }
+
+
+        .product {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(40px);
+            animation: productFadeIn 0.8s forwards;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+        }
+
+        .product .btn {
+            margin-top: auto;
+            margin-bottom: 0;
+        }
+
+        .product:hover {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+            transition: 0.2s;
+        }
+
+        @keyframes productFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .product img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .product h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .product p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 22px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 18px;
+            margin-top: auto;
+            background: none;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+            padding: 0;
+            display: block;
+            letter-spacing: normal;
+            font-family: inherit;
+        }
+
+        .btn {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 30px 0 20px 0;
+            color: #222;
+            letter-spacing: 2px;
+            border-bottom: 2px solid #eee;
+            display: inline-block;
+            padding: 10px 32px 12px 32px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            background: linear-gradient(90deg, #f8fafc 60%, #e0e7ef 100%);
+            border-radius: 12px 12px 0 0;
+            text-transform: uppercase;
+            animation: h1fadein 1.2s;
+        }
+
+        @keyframes h1fadein {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+
+        a {
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal:target {
+            display: block;
+        }
+
+        .modal-content {
+            background: #fff;
+            margin: 10% auto;
+            padding: 30px 40px;
+            border-radius: 8px;
+            width: 300px;
+            text-align: center;
+            position: relative;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: modalPop 0.5s forwards;
+        }
+
+        @keyframes modalPop {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .close {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            text-decoration: none;
+            font-size: 28px;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">TimeZone</div>
+            <ul class="nav-links">
+                <li><a href="user-homepage.html">Home</a></li>
+                <li><a href="user-products.html">Products</a></li>
+                <li><a href="user-cart.html">Cart</a></li>
+                <li><a href="user-profile.html">Profile</a></li>
+                <li><a href="about.html">About</a></li>
+
+            </ul>
+        </nav>
+
+    </header>
+    <div class="type">
+        <a href="#Premium" class="cta-btn">Premium</a>
+        <a href="#mens" class="cta-btn">Mens</a>
+        <a href="#women" class="cta-btn">Women</a>
+        <a href="#childrens" class="cta-btn">Children</a>
+        <a href="#sale" class="cta-btn">Sale</a>
+    </div><br><br>
+
+
+    </div>
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <a href="#" class="close">&times;</a>
+            <p>Added to cart!</p>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <h1 id="Premium">Premium Watch </h1>
+
+        <div class="products">
+            <!-- Product 1 -->
+            <div class="product">
+                <img src="product img/Premium/16.jpeg">
+                <h3>OLEVS Red Dial Women's Watch</h3>
+                <p>Elegant rose-gold wristwatch with a dazzling red faceted dial. Features a slim, metal link bracelet.
+                    Perfect for formal occasions or gifting.</p>
+                <div class="price">$499.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product">
+                <img src="product img/Premium/5.jpeg">
+                <h3>Men’s Chronograph Sports Watch</h3>
+                <p>Bold stainless steel watch with black and gold detailing. Features chronograph subdials and a sturdy
+                    bracelet with golden accents. Ideal for daily and sporty wear.</p>
+                <div class="price">$299.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product">
+                <img src="product img/Premium/11.jpeg">
+                <h3>Floral Crystal Dial Mesh Watch</h3>
+                <p>Stylish women’s watch featuring a 3D floral dial design with crystal embellishments. Comes with a
+                    rose gold mesh band. Great for fashion-forward looks.</p>
+                <div class="price">$599.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product">
+                <img src="product img/Premium/1.jpeg">
+                <h3>Luxury Leather Strap Chronograph Watch</h3>
+                <p>Masculine watch with a brown leather strap and rose gold casing. Features multiple subdials for
+                    chronograph functions. Suited for both business and casual settings.</p>
+                <div class="price">$299.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 5 -->
+            <div class="product">
+                <img src="product img/Premium/12.jpeg">
+                <h3>Elegant Crystal Bracelet Watch</h3>
+                <p>Jewelry-style women’s watch with a silver-toned bracelet and crystal-studded accents. Simple white
+                    dial makes it ideal for special events or weddings.</p>
+                <div class="price">$699.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 6 -->
+            <div class="product">
+                <img src="product img/Premium/4.jpeg">
+                <h3>Minimalist Black Chronograph Watch</h3>
+                <p>Sleek all-black stainless steel men’s watch with a clean chronograph display. Perfect for modern,
+                    minimalist, and professional styles.</p>
+                <div class="price">$500.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 7 -->
+            <div class="product">
+                <img src="product img/Premium/15.jpeg">
+                <h3>Two-Tone Rolex Datejust Style Watch</h3>
+                <p>Luxurious timepiece with a rose gold and silver bracelet. Features a fluted bezel and date window.
+                    Classic design suitable for formal and executive wear.</p>
+                <div class="price">$499.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 8 -->
+            <div class="product">
+                <img src="product img/Premium/3.jpeg">
+                <h3>Rolex GMT-Master II Style Watch</h3>
+                <p>High-end black dial watch with two-tone bracelet and rotating bezel. Iconic look designed for both
+                    travel and luxury wear.</p>
+                <div class="price">$999.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <h1 id="mens">Mens Watchs </h1>
+
+        <div class="products">
+            <!-- Product 1 -->
+            <div class="product">
+                <img src="product img/men/11.jpeg">
+                <h3>Classic Roman Numeral Dress Watch</h3>
+                <p>Description: Elegant white textured dial with Roman numeral markers, paired with a brown leather
+                    strap. Perfect for formal wear.</p>
+
+                <div class="price">$299.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product">
+                <img src="product img/men/2.jpeg">
+                <h3>Modern Fitness Smartwatch</h3>
+                <p>Description: Sleek black and navy-blue design with vibrant display. Features heart rate, step
+                    counter, and digital time display for active lifestyles.</p>
+
+                <div class="price">$149.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product">
+                <img src="product img/men/3.jpeg">
+                <h3>Matte Black Chronograph</h3>
+                <p>Description: A bold all-black watch with chronograph features, minimalist markers, and a leather
+                    strap. Designed for modern sophistication.</p>
+
+                <div class="price">$399.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product">
+                <img src="product img/men/4.jpeg">
+                <h3>Tactical Analog Watch</h3>
+                <p>Description: Rugged and functional, this black watch features bold elements with stitched leather
+                    straps and a durable metal casing.</p>
+
+                <div class="price">$299.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 5 -->
+            <div class="product">
+                <img src="product img/men/5.jpeg">
+                <h3>Skeleton Dial Sport Watch</h3>
+                <p>Description: Mechanical marvel with a see-through skeleton dial. Blue rubber strap complements
+                    its modern and sporty style.</p>
+
+                <div class="price">$159.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 6 -->
+            <div class="product">
+                <img src="product img/men/6.jpeg">
+                <h3>Rose Gold Roman Chronograph</h3>
+                <p>Description: Classic chronograph with a black dial, Roman numerals, and a polished rose gold case
+                    and bracelet. Timeless and bold.</p>
+
+                <div class="price">$279.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 7 -->
+            <div class="product">
+                <img src="product img/men/9.jpeg">
+                <h3>Minimalist Blue Accents Watch</h3>
+                <p>Description: Sleek and stylish with a matte black dial, minimal hour markers, and striking blue
+                    accents for a futuristic look.</p>
+
+                <div class="price">$399.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 8 -->
+            <div class="product">
+                <img src="product img/men/13.jpeg">
+                <h3>Multi-Time Zone Dual Dial Watch</h3>
+                <p>Description: A unique timepiece featuring three separate dials for multiple time zones, enclosed
+                    in a bold square case. Great for travelers.</p>
+
+                <div class="price">$289.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+        </div>
+
+    </div>
+    <br>
+
+    <div class="container">
+        <h1 id="women">Womens Watchs </h1>
+
+        <div class="products">
+            <!-- Product 1 -->
+            <div class="product">
+                <img src="product img/women/1.jpeg">
+                <h3>Elegant Rose Gold Watch</h3>
+                <p>Description: A sophisticated timepiece featuring a rose gold case adorned with sparkling
+                    stones and Roman numeral markers, paired with a white leather strap. Ideal for formal or
+                    evening wear.</p>
+
+                <div class="price">$289.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product">
+                <img src="product img/women/2.jpeg">
+
+                <h3>Vintage Red Oval Watch</h3>
+                <p>Description: This vintage-inspired watch has a red dial with Roman numerals and a slim gold
+                    oval case. The red leather strap enhances its bold and classy look.</p>
+
+                <div class="price">$149.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product">
+                <img src="product img/women/3.jpeg">
+                <h3>Gold Bracelet Watch Set</h3>
+                <p>Description: A luxurious gold-tone watch with an elegant intertwined bracelet strap. Comes as
+                    a set with a matching bracelet. Feminine and fashionable.</p>
+
+                <div class="price">$249.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product">
+                <img src="product img/women/4.jpeg">
+                <h3>Matte Green Metal Watch</h3>
+                <p>Description: A sleek all-metal wristwatch in dark green. Simple dial with minimal markers
+                    gives it a modern and bold aesthetic.</p>
+
+                <div class="price">$299.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 5 -->
+            <div class="product">
+                <img src="product img/women/5.jpeg">
+                <h3>Smart Butterfly Display Watch</h3>
+                <p>Description: A rose gold smart watch featuring multiple animated display options, including
+                    butterflies and animal faces. Offers fitness tracking and notifications.</p>
+
+                <div class="price">$300.00</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 6 -->
+            <div class="product">
+                <img src="product img/women/6.jpeg">
+                <h3>Silver & Gold Dress Watch</h3>
+                <p>Description: Classic round silver dial with gold detailing and a two-tone metal strap.
+                    Embellished hour markers make it elegant for dressy occasions.</p>
+
+                <div class="price">$333.33</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 7 -->
+            <div class="product">
+                <img src="product img/women/7.jpeg">
+                <h3>Rectangular Metal Link Watches</h3>
+                <p>Description: A set of two elegant watches with rectangular faces, one in silver and one in
+                    gold. Roman numeral markers and fine link bands add timeless charm.</p>
+
+                <div class="price">$279.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 8 -->
+            <div class="product">
+                <img src="product img/women/8.jpeg">
+                <h3>Red Glam Chronograph Watch</h3>
+                <p>Description: Dazzling red chronograph-style watch with a red leather strap and
+                    crystal-studded bezel. Eye-catching and luxurious.</p>
+
+                <div class="price">$999.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <div class="container">
+        <h1 id="childrens">childrens Watches </h1>
+
+        <div class="products">
+            <!-- Product 1 -->
+            <div class="product">
+                <img src="product img/child/1.jpeg">
+                <h3>Omega Speedmaster 38 Co-Axial Chronograph</h3>
+                <p>Description: A luxurious women's chronograph watch featuring a dark dial, rose gold
+                    accents, and a diamond bezel. The sleek leather strap and precise detailing make it
+                    ideal for both elegance and functionality.</p>
+                <div class="price">$199.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product">
+                <img src="product img/child/2.jpeg">
+
+                <h3>Sanda Tactical Digital Watch</h3>
+                <p>Description: A rugged digital-analog hybrid watch with a black and blue color scheme.
+                    Features multiple displays, stopwatch, alarm, and backlight. Perfect for outdoor and
+                    sports use.</p>
+                <div class="price">$149.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product">
+                <img src="product img/child/3.jpeg">
+                <h3>Cosmos Digital Sports Watch</h3>
+                <p>Description: A versatile digital sports watch available in multiple color options.
+                    Includes time, date, stopwatch, alarm, and LED backlight for easy viewing in low light
+                    conditions.</p>
+
+                <div class="price">$119.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product">
+                <img src="product img/child/4.jpeg">
+
+                <h3>Cute Cartoon Girls Watch</h3>
+                <p>Description: A charming watch for young girls with a pink strap and adorable
+                    cartoon-style dial featuring hearts and flowers. Comes in a matching gift box with a
+                    decorative bracelet.</p>
+
+                <div class="price">$111.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 5 -->
+            <div class="product">
+                <img src="product img/child/5.jpeg">
+
+                <h3>Kids Smart Watch with GPS and Camera</h3>
+                <p>Description: A multifunctional kids smart watch with a bright screen, GPS tracking,
+                    camera, and call/SOS functionality. Designed for safety, communication, and fun in one
+                    wearable device.</p>
+
+                <div class="price">$159.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 6 -->
+            <div class="product">
+                <img src="product img/child/6.jpeg">
+                <h3>Simei Colorful Learning Watch</h3>
+                <p>Description: A vibrant and fun analog watch for children. Available in bold colors like
+                    pink and blue, with large, easy-to-read numbers—great for kids learning to tell time.
+                </p>
+
+                <div class="price">$79.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 7 -->
+            <div class="product">
+                <img src="product img/child/7.jpeg">
+                <h3>Coolboss Digital LED Sports Watch</h3>
+                <p>Description: A bold, black digital watch with a futuristic silver-accented case and a
+                    large LED display. Features include stopwatch, alarm, and water resistance for daily
+                    active use.</p>
+
+                <div class="price">$99.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 8 -->
+            <div class="product">
+                <img src="product img/child/8.jpeg">
+                <h3>Vintage Gold Digital Watch</h3>
+                <p>Description: A retro-styled digital watch with a shiny gold metal case and bracelet.
+                    Displays time, date, and alarm functions. A classic piece for those who love vintage
+                    aesthetics.</p>
+
+                <div class="price">$159.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <div class="container">
+        <h1 id="sale">sales </h1>
+
+        <div class="products">
+            <!-- Product 1 -->
+            <div class="product">
+                <img src="product img/sale/1.jpeg">
+                <h3>Rolex Milgauss 116400GV "Z-Blue"</h3>
+                <p>Description: This is a distinctive Rolex with a striking metallic blue dial and a
+                    green-tinted sapphire crystal. It has a unique orange lightning bolt seconds hand.
+                </p>
+                <div class="price">$89.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product">
+                <img src="product img/sale/2.jpeg">
+                <h3>Omega Speedmaster Racing</h3>
+                <p>Description: A chronograph with a black dial, three subdials, and a red checkered
+                    minute track around the edge. Stainless steel bracelet with a tachymeter bezel.</p>
+                <div class="price">$149.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product">
+                <img src="product img/sale/3.jpeg">
+                <h3>Rolex Oyster Perpetual “Celebration” Dial</h3>
+                <p>Description: Features a playful turquoise blue dial with multicolored bubbles. A
+                    modern, fun twist on the classic Rolex design.</p>
+                <div class="price">$99.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product">
+                <img src="product img/sale/4.jpeg">
+                <h3>Patek Philippe Nautilus 5711</h3>
+                <p>Description: A luxury sports watch with a blue horizontal embossed dial, integrated
+                    bracelet, and elegant rounded octagonal bezel..</p>
+                <div class="price">$199.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 5 -->
+            <div class="product">
+                <img src="product img/sale/5.jpeg">
+                <h3>Patek Philippe Calatrava</h3>
+                <p>Description: A minimalist and elegant dress watch with a white dial, thin gold case,
+                    and a brown leather strap. No numerals—just slender stick indices.</p>
+                <div class="price">$79.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 6 -->
+            <div class="product">
+                <img src="product img/sale/6.jpeg">
+                <h3>Rolex Oyster Perpetual (Various Dials)</h3>
+                <p>Description: Two Rolex Oyster Perpetual watches, one with a dark gradient dial and
+                    the other with a Tiffany blue dial. Simple and elegant.</p>
+                <div class="price">$179.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 7 -->
+            <div class="product">
+                <img src="product img/sale/7.jpeg">
+                <h3> Vintage Style Watch</h3>
+                <p>Description: Sporty black dial with chronograph subdials and red accents. Leather
+                    strap with white stitching. Bold hands and markers.</p>
+                <div class="price">$169.99</div>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 8 -->
+            <div class="product">
+                <img src="product img/sale/8.jpeg">
+                <h3>Minimalist Field Watch</h3>
+                <p>Description: A matte black case with a black dial and white markers, paired with
+                    a brown leather strap. Very simple and legible.</p><br>
+                <div class="price">$189.99</div><br>
+                <a href="#cart-modal" class="btn">Add to Cart</a>
+            </div>
+        </div>
+    </div>
+
+
+    <br>
+    </div>
+</body>
+
+</html>
